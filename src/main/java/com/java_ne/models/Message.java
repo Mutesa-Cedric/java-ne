@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
 public class Message extends Base {
 
     @ManyToOne()
-    @JoinColumn(name = "customer_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @Column(nullable = false)
     private String message;

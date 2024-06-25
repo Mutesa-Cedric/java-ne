@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
 public class Banking extends Base {
 
     @ManyToOne()
-    @JoinColumn(name = "customer_id")
-    @Column(nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @Column(nullable = false)
     private String account;

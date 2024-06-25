@@ -7,10 +7,6 @@ import com.java_ne.dtos.response.ApiResponse;
 import com.java_ne.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
-
 public class ExceptionUtils {
     public static ResponseEntity<ApiResponse<Object>> handleResponseException(Exception e) {
         if (e instanceof NotFoundException) {
@@ -32,7 +28,7 @@ public class ExceptionUtils {
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     null
             );
-        } else if (e instanceof BadRequestException || e instanceof InternalAuthenticationServiceException || e instanceof BadCredentialsException || e instanceof AccessDeniedException) {
+        } else if (e instanceof BadRequestException) {
             return ApiResponse.error(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST,
