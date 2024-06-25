@@ -1,6 +1,7 @@
 package com.java_ne.services.implementations;
 
 import com.java_ne.dtos.banking.CreateUpdateBanking;
+import com.java_ne.dtos.message.CreateUpdateMessage;
 import com.java_ne.dtos.response.ApiResponse;
 import com.java_ne.enumerations.banking.EBankingType;
 import com.java_ne.exceptions.BadRequestException;
@@ -11,6 +12,8 @@ import com.java_ne.models.Customer;
 import com.java_ne.repositories.IBankingRepository;
 import com.java_ne.repositories.ICustomerRepository;
 import com.java_ne.services.interfaces.BankingService;
+import com.java_ne.services.interfaces.MailService;
+import com.java_ne.services.interfaces.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,9 @@ public class BankingServiceImpl implements BankingService {
 
     private final IBankingRepository bankingRepository;
     private final ICustomerRepository customerRepository;
+
+    private final MailService mailService;
+    private final MessageService messageService;
 
     @Override
     public ResponseEntity<ApiResponse<Banking>> createBanking(CreateUpdateBanking banking) {
@@ -57,6 +63,11 @@ public class BankingServiceImpl implements BankingService {
                 customerRepository.save(accountToTransfer.get());
             }
             customerRepository.save(customer);
+            mailService.sendTransactionEmail(customer.getEmail(), "Transaction Alert", customer.getFirstName(), customer.getLastName(), banking.getType().toString(), String.valueOf(banking.getAmount()), banking.getAccount());
+            CreateUpdateMessage messageDTO = new CreateUpdateMessage();
+            messageDTO.setCustomerId(customer.getId());
+            messageDTO.setMessage("Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + "of " + banking.getAmount() +"on your account "+ banking.getAccount()+  " has been completed successfully");
+            messageService.createMessage(messageDTO);
             return ApiResponse.success("Banking created successfully", HttpStatus.CREATED, bankingRepository.save(banking1));
         } catch (Exception e) {
             throw new CustomException(e);

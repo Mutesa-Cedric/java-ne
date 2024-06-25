@@ -7,7 +7,7 @@
     <title>SpringBoot Account Verification Successfully</title>
     <style>
         body {
-            font-family: 'Garamond', sans-serif;
+            font-family: "Fira Code Medium", sans-serif;
             margin: 10px;
             padding: 0;
         }
@@ -79,14 +79,16 @@
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td class="content">
-                <h2>SpringBoot Verification</h2>
-                <h3>Hello <span th:text="${firstName}">Name</span></h3>
-                <p>Your account has been verified successfully!</p>
+                <h2>Account Activity Notification</h2>
+                <h3>Dear <span th:text="${firstName} ${lastName}"> </span>,</h3>
+                <p>Your <span th:text="${transactionType}">SAVING</span> of <span th:text="${amount}">100</span> on
+                your account <span th:text="${account}">1234567890</span> has been completed successfully.
+                </p>
             </td>
         </tr>
         <tr>
             <td class="footer">
-                &copy; 2024 SpringBoot. All rights reserved.
+                &copy;2024 Mutesa Banking System. All rights reserved.
             </td>
         </tr>
     </table>
