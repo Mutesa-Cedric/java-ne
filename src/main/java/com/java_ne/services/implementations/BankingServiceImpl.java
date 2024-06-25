@@ -64,7 +64,7 @@ public class BankingServiceImpl implements BankingService {
             }
             customerRepository.save(customer);
 //            mailService.sendTransactionEmail(customer.getEmail(), "Transaction Alert", customer.getFirstName(), customer.getLastName(), banking.getType().toString(), String.valueOf(banking.getAmount()), banking.getAccount());
-//            mailService.sendEmail(customer.getEmail(), "Transaction Alert", "Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() +" on your account "+ banking.getAccount()+  " has been completed successfully", false);
+            mailService.sendEmail(customer.getEmail(), "Transaction Alert", "Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() + "RWF on your account " + banking.getAccount() + " has been completed successfully", false);
 
             CreateUpdateMessage messageDTO = new CreateUpdateMessage();
             messageDTO.setCustomerId(customer.getId());
