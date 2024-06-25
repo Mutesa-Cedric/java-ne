@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -28,7 +29,8 @@ public class Customer  extends  Base{
     @Column(nullable = false, unique = true)
     private String mobile;
     @Column(nullable = false)
-    private Date dob;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dob;
     @Column(nullable = false, unique = true)
     private String account;
     @Column(nullable = false)

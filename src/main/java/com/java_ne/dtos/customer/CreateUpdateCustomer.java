@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -16,7 +17,8 @@ public class CreateUpdateCustomer {
     private String lastName;
     private String email;
     private String mobile;
-    private Date dob;
+
+    private LocalDate dob;
     private String account;
     private Double balance;
 }

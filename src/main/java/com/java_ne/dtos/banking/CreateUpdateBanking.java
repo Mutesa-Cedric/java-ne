@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateUpdateBanking {
-    private Customer customer;
+    private Long customerId;
     private String account;
     private Double amount;
     private EBankingType type;

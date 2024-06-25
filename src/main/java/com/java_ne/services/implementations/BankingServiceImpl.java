@@ -36,7 +36,7 @@ public class BankingServiceImpl implements BankingService {
     public ResponseEntity<ApiResponse<Banking>> createBanking(CreateUpdateBanking banking) {
         try {
             Banking banking1 = new Banking();
-            Customer customer = customerRepository.findById(banking.getCustomer().getId()).orElseThrow(() -> new NotFoundException("Customer not found"));
+            Customer customer = customerRepository.findById(banking.getCustomerId()).orElseThrow(() -> new NotFoundException("Customer not found"));
             banking1.setCustomer(customer);
             banking1.setAccount(banking.getAccount());
             banking1.setAmount(banking.getAmount());
@@ -63,10 +63,12 @@ public class BankingServiceImpl implements BankingService {
                 customerRepository.save(accountToTransfer.get());
             }
             customerRepository.save(customer);
-            mailService.sendTransactionEmail(customer.getEmail(), "Transaction Alert", customer.getFirstName(), customer.getLastName(), banking.getType().toString(), String.valueOf(banking.getAmount()), banking.getAccount());
+//            mailService.sendTransactionEmail(customer.getEmail(), "Transaction Alert", customer.getFirstName(), customer.getLastName(), banking.getType().toString(), String.valueOf(banking.getAmount()), banking.getAccount());
+//            mailService.sendEmail(customer.getEmail(), "Transaction Alert", "Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() +" on your account "+ banking.getAccount()+  " has been completed successfully", false);
+
             CreateUpdateMessage messageDTO = new CreateUpdateMessage();
             messageDTO.setCustomerId(customer.getId());
-            messageDTO.setMessage("Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + "of " + banking.getAmount() +"on your account "+ banking.getAccount()+  " has been completed successfully");
+            messageDTO.setMessage("Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() + " on your account " + banking.getAccount() + " has been completed successfully");
             messageService.createMessage(messageDTO);
             return ApiResponse.success("Banking created successfully", HttpStatus.CREATED, bankingRepository.save(banking1));
         } catch (Exception e) {
@@ -82,7 +84,7 @@ public class BankingServiceImpl implements BankingService {
                 throw new NotFoundException("Banking does not exist");
             }
             Banking banking1 = existingBanking.get();
-            Customer customer = customerRepository.findById(banking.getCustomer().getId()).orElseThrow(() -> new NotFoundException("Customer not found"));
+            Customer customer = customerRepository.findById(banking.getCustomerId()).orElseThrow(() -> new NotFoundException("Customer not found"));
             banking1.setCustomer(customer);
             banking1.setAccount(banking.getAccount());
             banking1.setAmount(banking.getAmount());
@@ -154,7 +156,6 @@ public class BankingServiceImpl implements BankingService {
             throw new CustomException(e);
         }
     }
-
 
 
     @Override

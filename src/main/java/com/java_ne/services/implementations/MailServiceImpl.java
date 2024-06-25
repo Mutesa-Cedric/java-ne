@@ -6,7 +6,6 @@ import com.java_ne.services.interfaces.MailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -40,6 +39,7 @@ public class MailServiceImpl implements MailService {
         } catch (MessagingException exception) {
             throw new BadRequestException("Failed To Send Email: " + exception.getMessage());
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new InternalServerErrorException("An error occurred while sending email");
         }
     }
