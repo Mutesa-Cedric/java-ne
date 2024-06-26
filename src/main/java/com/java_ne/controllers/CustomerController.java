@@ -4,6 +4,7 @@ import com.java_ne.dtos.customer.CreateUpdateCustomer;
 import com.java_ne.dtos.response.ApiResponse;
 import com.java_ne.models.Customer;
 import com.java_ne.services.interfaces.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Customer>> createCustomer(@RequestBody CreateUpdateCustomer customer) {
+    public ResponseEntity<ApiResponse<Customer>> createCustomer(@Valid @RequestBody CreateUpdateCustomer customer) {
         return customerService.createCustomer(customer);
     }
 
     @PutMapping("/update/{customerId}")
-    public ResponseEntity<ApiResponse<Customer>> updateCustomer(@RequestBody CreateUpdateCustomer customer, @PathVariable Long customerId) {
+    public ResponseEntity<ApiResponse<Customer>> updateCustomer(@Valid @RequestBody CreateUpdateCustomer customer, @PathVariable Long customerId) {
         return customerService.updateCustomer(customer, customerId);
     }
 

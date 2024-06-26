@@ -61,15 +61,15 @@ public class BankingServiceImpl implements BankingService {
                 customer.setBalance(customer.getBalance() - banking.getAmount());
                 accountToTransfer.get().setBalance(accountToTransfer.get().getBalance() + banking.getAmount());
                 customerRepository.save(accountToTransfer.get());
+                mailService.sendEmail(accountToTransfer.get().getEmail(), "Transaction Alert", "Dear " + accountToTransfer.get().getFirstName() + " " + accountToTransfer.get().getLastName() + "You have received "+ banking.getAmount()+ " RWF on your account ", false);
             }
             customerRepository.save(customer);
 //            mailService.sendTransactionEmail(customer.getEmail(), "Transaction Alert", customer.getFirstName(), customer.getLastName(), banking.getType().toString(), String.valueOf(banking.getAmount()), banking.getAccount());
             mailService.sendEmail(customer.getEmail(), "Transaction Alert", "Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() + "RWF on your account " + banking.getAccount() + " has been completed successfully", false);
-
-            CreateUpdateMessage messageDTO = new CreateUpdateMessage();
-            messageDTO.setCustomerId(customer.getId());
-            messageDTO.setMessage("Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() + " on your account " + banking.getAccount() + " has been completed successfully");
-            messageService.createMessage(messageDTO);
+//            CreateUpdateMessage messageDTO = new CreateUpdateMessage();
+//            messageDTO.setCustomerId(customer.getId());
+//            messageDTO.setMessage("Dear " + customer.getFirstName() + " " + customer.getLastName() + ", your " + banking.getType().toString() + " of " + banking.getAmount() + " on your account " + banking.getAccount() + " has been completed successfully");
+//            messageService.createMessage(messageDTO);
             return ApiResponse.success("Banking created successfully", HttpStatus.CREATED, bankingRepository.save(banking1));
         } catch (Exception e) {
             throw new CustomException(e);

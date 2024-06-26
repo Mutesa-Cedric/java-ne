@@ -3,6 +3,7 @@ package com.java_ne.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +26,19 @@ public class Customer  extends  Base{
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false, unique = true)
+    @Email
     private String email;
     @Column(nullable = false, unique = true)
     private String mobile;
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Past
     private LocalDate dob;
     @Column(nullable = false, unique = true)
     private String account;
     @Column(nullable = false)
+    @Min(1)
+    @Positive
     private Double balance;
     @UpdateTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")

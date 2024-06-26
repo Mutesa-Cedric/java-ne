@@ -3,6 +3,8 @@ package com.java_ne.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.java_ne.enumerations.banking.EBankingType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,8 @@ public class Banking extends Base {
     @Column(nullable = false)
     private String account;
     @Column(nullable = false)
+    @Positive
+    @Min(1)
     private Double amount;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

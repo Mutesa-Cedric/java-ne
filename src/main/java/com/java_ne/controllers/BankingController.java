@@ -4,6 +4,7 @@ import com.java_ne.dtos.banking.CreateUpdateBanking;
 import com.java_ne.dtos.response.ApiResponse;
 import com.java_ne.models.Banking;
 import com.java_ne.services.interfaces.BankingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class BankingController {
     private final BankingService bankingService;
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Banking>> createBanking(@RequestBody CreateUpdateBanking banking) {
+    public ResponseEntity<ApiResponse<Banking>> createBanking(@Valid @RequestBody CreateUpdateBanking banking) {
         return bankingService.createBanking(banking);
     }
 
